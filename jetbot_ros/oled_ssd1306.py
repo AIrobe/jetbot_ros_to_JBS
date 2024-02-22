@@ -1,6 +1,7 @@
 import rclpy
 import Adafruit_SSD1306
 
+
 from jetbot_ros.oled import OLEDController
 
 from PIL import Image
@@ -52,7 +53,7 @@ def main(args=None):
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()
-    
+
     
 if __name__ == '__main__':
     main()

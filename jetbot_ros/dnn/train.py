@@ -19,7 +19,7 @@ parser.add_argument('--learning-rate', default=0.01, type=float)
 parser.add_argument('--scheduler', default='StepLR_75', type=str)
 parser.add_argument('--train-split', default=0.8, type=float)
 parser.add_argument('--save', default=f"data/models/{datetime.now().strftime('%Y%m%d%H%M')}", type=str)
-parser.add_argument('--save', default=f"data/models/{datetime.now().strftime('%Y%m%d%H%M')}", type=str)
+#parser.add_argument('--save', default=f"./model_best_{datetime.now().strftime('%Y%m%d%H%M')}.pth", type=str)
 
 args = parser.parse_args()
 print(args)

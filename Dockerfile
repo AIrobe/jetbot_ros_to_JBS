@@ -73,27 +73,27 @@ ENV PYTHONPATH=/opt/py3gazebo
 #
 # Gazebo plugins for ROS
 #
-#RUN source ${ROS_ROOT}/install/setup.bash && \
-#    export ROS_PACKAGE_PATH=${AMENT_PREFIX_PATH} && \
-#    cd ${ROS_ROOT} && \
-#    mkdir -p src/gazebo && \
-#    rosinstall_generator --deps --exclude RPP --rosdistro ${ROS_DISTRO} \
-#          gazebo_ros_pkgs \
-#	> ros2.${ROS_DISTRO}.gazebo.rosinstall && \
-#    cat ros2.${ROS_DISTRO}.gazebo.rosinstall && \
-#    vcs import src/gazebo < ros2.${ROS_DISTRO}.gazebo.rosinstall && \
-#    apt-get update && \
-#    rosdep install -y \
-#       --ignore-src \
-#       --from-paths src/gazebo \
-#	  --rosdistro ${ROS_DISTRO} \
-#	  --skip-keys "gazebo11 libgazebo11-dev libopencv-dev libopencv-contrib-dev libopencv-imgproc-dev python-opencv python3-opencv" && \
-#    rm -rf /var/lib/apt/lists/* && \
-#    apt-get clean && \
-#    colcon build --merge-install --base-paths src/gazebo \
-#    && rm -rf ${ROS_ROOT}/src \
-#    && rm -rf ${ROS_ROOT}/logs \
-#    && rm -rf ${ROS_ROOT}/build 
+RUN source ${ROS_ROOT}/install/setup.bash && \
+    export ROS_PACKAGE_PATH=${AMENT_PREFIX_PATH} && \
+    cd ${ROS_ROOT} && \
+    mkdir -p src/gazebo && \
+    rosinstall_generator --deps --exclude RPP --rosdistro ${ROS_DISTRO} \
+          gazebo_ros_pkgs \
+	> ros2.${ROS_DISTRO}.gazebo.rosinstall && \
+    cat ros2.${ROS_DISTRO}.gazebo.rosinstall && \
+    vcs import src/gazebo < ros2.${ROS_DISTRO}.gazebo.rosinstall && \
+    apt-get update && \
+    rosdep install -y \
+       --ignore-src \
+       --from-paths src/gazebo \
+	  --rosdistro ${ROS_DISTRO} \
+	  --skip-keys "gazebo11 libgazebo11-dev libopencv-dev libopencv-contrib-dev libopencv-imgproc-dev python-opencv python3-opencv" && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt-get clean && \
+    colcon build --merge-install --base-paths src/gazebo \
+    && rm -rf ${ROS_ROOT}/src \
+    && rm -rf ${ROS_ROOT}/logs \
+    && rm -rf ${ROS_ROOT}/build 
     
 
 #
@@ -133,7 +133,7 @@ ENV PYTHONPATH="${JETBOT_ROOT}:${PYTHONPATH}"
 #
 #RUN source ${ROS_ENVIRONMENT} && \
 #    cd ${WORKSPACE_ROOT}/src && \
-#    git clone https://github.com/dusty-nv/ros_deep_learning && \
+#    git clone https://github.com/dusty-nv/ros_deep_learning.git && \
 #    cd ../ && \
 #    colcon build --symlink-install --event-handlers console_direct+
 
@@ -143,19 +143,19 @@ ENV PYTHONPATH="${JETBOT_ROOT}:${PYTHONPATH}"
 #
 COPY jetbot_ros ${JETBOT_ROOT}/jetbot_ros
 COPY launch ${JETBOT_ROOT}/launch
-#COPY gazebo ${JETBOT_ROOT}/gazebo
-#COPY resource ${JETBOT_ROOT}/resource
+COPY gazebo ${JETBOT_ROOT}/gazebo
+COPY resource ${JETBOT_ROOT}/resource
 
 COPY package.xml ${JETBOT_ROOT}
 COPY setup.py ${JETBOT_ROOT}
 COPY setup.cfg ${JETBOT_ROOT}
 
-#RUN cd ${JETBOT_ROOT}/gazebo/plugins/ && \
-#    mkdir build && \
-#    cd build && \
-#    cmake ../ && \
-#    make -j$(nproc) && \
-#    make install
+RUN cd ${JETBOT_ROOT}/gazebo/plugins/ && \
+    mkdir build && \
+    cd build && \
+    cmake ../ && \
+    make -j$(nproc) && \
+    make install
     
 RUN source ${ROS_ENVIRONMENT} && \
     cd ${WORKSPACE_ROOT} && \
