@@ -60,7 +60,8 @@ source docker/tag.sh
 DOCKER_ROOT="/workspace/src/jetbot_ros_to_JBS"	
 
 # generate mount commands
-DATA_VOLUME="--volume $PWD/data:$DOCKER_ROOT/data"
+#DATA_VOLUME="--volume $PWD/data:$DOCKER_ROOT/data"
+DATA_VOLUME="--volume $PWD/data:$DOCKER_ROOT/data --volume $PWD/data/datasets:/workspace/src/jetbot_ros/data/datasets"
 DEV_VOLUME=""
 
 # parse user arguments

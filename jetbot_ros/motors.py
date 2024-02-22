@@ -4,6 +4,7 @@ import math
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
 from rcl_interfaces.msg import SetParametersResult
+from std_msgs.msg import String
 
 
 class MotorController(Node):
@@ -35,6 +36,9 @@ class MotorController(Node):
          
         self.last_x = -999
         self.last_rot = -999
+        
+        # Create a publisher for sending motor parameters to IoTHubNode
+        self.publisher = self.create_publisher(String, 'motor_data', 10)
         
     def destroy_node(self):
         self.get_logger().info(f"shutting down, stopping robot...")

@@ -1,14 +1,13 @@
-import rclpy
+from azure.iot.device import IoTHubDeviceClient, Message
 from rclpy.node import Node
-from std_msgs.msg import String
-from azure.iot.device import IoTHubDeviceClient
+from rcl_interfaces.msg import Log
 
 class IoTHubNode(Node):
     def __init__(self):
         super().__init__('iothub_node')
         self.subscription = self.create_subscription(
-            String,
-            'motor_data',
+            Log,
+            '/rosout',
             self.callback,
             10
         )
@@ -16,10 +15,14 @@ class IoTHubNode(Node):
         self.client = IoTHubDeviceClient.create_from_connection_string(self.IOTHUB_DEVICE_CONNECTION_STRING)
 
     def callback(self, msg):
-        self.get_logger().info("Received message from motor_node: " + msg.data)
+        self.get_logger().info("Received message from /rosout: " + msg.msg)
         self.get_logger().info("Sending message to IoT Hub...")
-        self.client.send_message(msg.data)
-        self.get_logger().info("Message successfully sent to IoT Hub")
+        message = Message(msg.msg)
+        try:
+            self.client.send_message(message)
+            self.get_logger().info("Message successfully sent to IoT Hub")
+        except Exception as e:
+            self.get_logger().error("Failed to send message to IoT Hub: " + str(e))
 
 def main(args=None):
     rclpy.init(args=args)

@@ -44,6 +44,7 @@ setup(
             'motors_waveshare = jetbot_ros.motors_waveshare:main',
             'motors_sparkfun = jetbot_ros.motors_sparkfun:main',
             'oled_ssd1306 = jetbot_ros.oled_ssd1306:main',
+            'subscriber_rosout = jetbot_ros.subscriber_rosout:main',
         ],
     },
 )
