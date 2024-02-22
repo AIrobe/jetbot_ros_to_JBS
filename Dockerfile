@@ -63,9 +63,9 @@ RUN apt-get update && \
 
 RUN rm -rf /opt/py3gazebo && \
     git clone https://github.com/dusty-nv/py3gazebo /opt/py3gazebo && \
-    pip3 install protobuf>=2.6 --verbose && \
-    pip3 install trollius --verbose && \
-    pip3 install pynput --verbose
+    python3 -m pip install protobuf==3.19.4 --verbose && \
+    python3 -m pip install trollius --verbose && \
+    python3 -m pip install pynput --verbose
 
 ENV PYTHONPATH=/opt/py3gazebo
    
@@ -156,8 +156,6 @@ COPY setup.cfg ${JETBOT_ROOT}
 #    cmake ../ && \
 #    make -j$(nproc) && \
 #    make install
-
-RUN ls /workspace/install/jetbot_ros/share/jetbot_ros
     
 RUN source ${ROS_ENVIRONMENT} && \
     cd ${WORKSPACE_ROOT} && \
