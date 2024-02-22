@@ -61,7 +61,8 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
-RUN git clone https://github.com/dusty-nv/py3gazebo /opt/py3gazebo && \
+RUN rm -rf /opt/py3gazebo && \
+    git clone https://github.com/dusty-nv/py3gazebo /opt/py3gazebo && \
     pip3 install protobuf>=2.6 --verbose && \
     pip3 install trollius --verbose && \
     pip3 install pynput --verbose
