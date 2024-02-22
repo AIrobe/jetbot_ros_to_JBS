@@ -5,7 +5,7 @@ source docker/l4t_version.sh
 
 TAG="r$L4T_VERSION"
 
-if [ $L4T_VERSION = "32.5.1" ]; then
+if [ "$L4T_VERSION" = "32.5.1" ] || [ "$L4T_VERSION" = "32.5.2" ]; then
 	TAG="r32.5.0"
 fi	
 	

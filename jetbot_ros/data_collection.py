@@ -52,7 +52,11 @@ class DataCollectionNode(Node):
         if not self.collect:
             return
             
-        img = np.frombuffer(msg.data, dtype=np.uint8).reshape(msg.height, msg.width, -1)
+        try:
+            img = np.frombuffer(msg.data, dtype=np.uint8).reshape(msg.height, msg.width, -1)
+        except Exception as e:
+            self.get_logger().error(f"Failed to convert image data to numpy array: {e}")
+            return
 
         if msg.encoding == 'bgr8':
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -60,7 +64,6 @@ class DataCollectionNode(Node):
         title = 'Click on path center point'
         cv2.imshow(title, cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
         cv2.setMouseCallback(title, self.click_event)
-        cv2.waitKey(0)
         
         if self.xy_label is not None:
             img_path = os.path.join(self.data_path, f"xy_{self.xy_label[0]:03d}_{self.xy_label[1]:03d}_{datetime.now().strftime('%Y%m%d-%H%M%S-%f')}.jpg")
@@ -74,7 +77,10 @@ class DataCollectionNode(Node):
     def click_event(self, event, x, y, flags, param):
         if event == cv2.EVENT_LBUTTONDOWN:
             self.xy_label = (x,y)
-            cv2.destroyAllWindows()    
+            try:
+                cv2.destroyAllWindows()
+            except Exception as e:
+                self.get_logger().error(f"Failed to destroy windows: {e}")    
         
 def main(args=None):
     rclpy.init(args=args)

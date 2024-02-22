@@ -57,7 +57,7 @@ die() {
 source docker/tag.sh
 
 # where the project resides inside docker
-DOCKER_ROOT="/workspace/src/jetbot_ros"	
+DOCKER_ROOT="/workspace/src/jetbot_ros_to_JBS"	
 
 # generate mount commands
 DATA_VOLUME="--volume $PWD/data:$DOCKER_ROOT/data"
