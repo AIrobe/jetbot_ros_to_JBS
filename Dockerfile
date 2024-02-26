@@ -175,7 +175,7 @@ RUN sed -i \
 RUN echo 'source ${ROS_ROOT}/install/setup.bash' >> /root/.bashrc && \
     echo 'source ${WORKSPACE_ROOT}/install/local_setup.bash' >> /root/.bashrc
 
-#RUN chmod +x /ros_entrypoint.sh
+RUN chmod +x /ros_entrypoint.sh
 
 ENTRYPOINT ["/ros_entrypoint.sh"]
 CMD ["bash"]
